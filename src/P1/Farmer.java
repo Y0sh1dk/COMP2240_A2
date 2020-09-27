@@ -5,23 +5,47 @@ import java.util.concurrent.*;
 
 public class Farmer implements Runnable { // Implements runnable so it can be ran as a separate thread
     private int farmerID;
+    private int stepsTaken;
     private String farmerName;
     private String homeLocation;
     private String destination;
+    private String currentLocation;
     private Bridge bridge;
-
-
 
     @Override
     public void run() {
-//        Try to use bridge?, try to aquire lock, if not wait?
+        System.out.println(this.farmerName + ": Waiting for bridge. Going towards " + this.destination);
+        while(true) {
+//            Try to cross bridge
+            try {
+                bridge.getLock().acquire();
+                while(this.stepsTaken <20) {
+                    this.stepsTaken += 5;
+                    Thread.sleep(200);
+                    System.out.println(this.farmerName + ": Crossing bridge Step " + this.stepsTaken);
+                }
+                System.out.println(this.farmerName + ": Across the bridge");
+                this.bridge.getLock().release();
+                this.stepsTaken = 0;
+                this.currentLocation = this.destination;
+                this.changeDestination();
+                this.bridge.incrementCount();
+                System.out.println("NEON = " + this.bridge.getCount());
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println(this.farmerName + ": Waiting for bridge. Going towards " + this.destination);
+        }
     }
 
     Farmer() {
         this.farmerID = 0;
+        this.stepsTaken = 0;
         this.farmerName = "";
         this.homeLocation = "";
         this.destination = "";
+        this.currentLocation = "";
         this.bridge = null;
 
     }
@@ -30,6 +54,7 @@ public class Farmer implements Runnable { // Implements runnable so it can be ra
         this();
         this.farmerID = id;
         this.homeLocation = home;
+        this.currentLocation = this.homeLocation;
         this.bridge = b;
         this.generateNameAndDest();
     }
@@ -44,6 +69,14 @@ public class Farmer implements Runnable { // Implements runnable so it can be ra
         } else {
 //            TODO: exeption?
             System.out.println("Invalid Home");
+        }
+    }
+
+    private void changeDestination() {
+        if (this.currentLocation.equals("North")) {
+            this.destination = "South";
+        } else if (this.currentLocation.equals("South")) {
+            this.destination = "North";
         }
     }
 

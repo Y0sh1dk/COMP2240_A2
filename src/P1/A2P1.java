@@ -30,7 +30,7 @@ public class A2P1 {
         ArrayList<Thread> farmerThreads = generateFarmerThreads(farmerList);
 
         startThreads(farmerThreads);
-
+        System.out.println("test");
     }
 
     private ArrayList<Farmer> generateFarmers(int n, int s, Bridge b) {
