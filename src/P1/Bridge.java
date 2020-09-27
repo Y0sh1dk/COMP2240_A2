@@ -9,4 +9,14 @@ public class Bridge {
     private Semaphore lock = new Semaphore(1, true); // Only one thread can access and waiting thread are granted a permit in correct order with 'true'
 
 
+
+
+    public static int getBridgeLength() {
+        return BRIDGE_LENGTH;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
 }
