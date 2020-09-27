@@ -27,7 +27,10 @@ public class A2P1 {
         int totalFarmers = northFarmers + southFarmers;
         Bridge bridge = new Bridge();
         ArrayList<Farmer> farmerList = generateFarmers(northFarmers, southFarmers, bridge);
-        System.out.println("test");
+        ArrayList<Thread> farmerThreads = generateFarmerThreads(farmerList);
+
+        startThreads(farmerThreads);
+
     }
 
     private ArrayList<Farmer> generateFarmers(int n, int s, Bridge b) {
@@ -41,6 +44,21 @@ public class A2P1 {
             farmerList.add(new Farmer(i+1, "South", b));
         }
         return farmerList;
+    }
+
+    private ArrayList<Thread> generateFarmerThreads(ArrayList<Farmer> farmers) {
+        ArrayList<Thread> threads = new ArrayList<>();
+
+        for ( Farmer f : farmers) {
+            threads.add(new Thread(f));
+        }
+        return threads;
+    }
+
+    private void startThreads(ArrayList<Thread> threads) {
+        for (Thread t : threads) {
+            t.start();
+        }
     }
 
 }
