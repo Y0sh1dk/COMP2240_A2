@@ -19,7 +19,7 @@ public class Farmer implements Runnable { // Implements runnable so it can be ra
 //            Try to cross bridge
             try {
                 bridge.getLock().acquire();
-                while(this.stepsTaken <20) {
+                while(this.stepsTaken < Bridge.getBridgeLength()) {
                     this.stepsTaken += 5;
                     Thread.sleep(200);
                     System.out.println(this.farmerName + ": Crossing bridge Step " + this.stepsTaken);
@@ -47,7 +47,6 @@ public class Farmer implements Runnable { // Implements runnable so it can be ra
         this.destination = "";
         this.currentLocation = "";
         this.bridge = null;
-
     }
 
     Farmer(int id, String home, Bridge b) {
@@ -66,9 +65,6 @@ public class Farmer implements Runnable { // Implements runnable so it can be ra
         } else if (this.homeLocation.equals("South")) {
             this.farmerName = "S_Farmer" + this.farmerID;
             this.destination = "North";
-        } else {
-//            TODO: exeption?
-            System.out.println("Invalid Home");
         }
     }
 

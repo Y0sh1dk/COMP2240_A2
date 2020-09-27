@@ -3,7 +3,6 @@ package P1;
 import java.util.ArrayList;
 
 public class A2P1 {
-
     public static void main(String[] args) { // Example: 'N=2, S=2'
         if (args.length != 2) { // If wrong args amount given
             System.out.println("Usage: A2P1 2 2");
@@ -24,7 +23,6 @@ public class A2P1 {
     }
 
     private void run(int northFarmers,int southFarmers) {
-        int totalFarmers = northFarmers + southFarmers;
         Bridge bridge = new Bridge();
         ArrayList<Farmer> farmerList = generateFarmers(northFarmers, southFarmers, bridge);
         ArrayList<Thread> farmerThreads = generateFarmerThreads(farmerList);
