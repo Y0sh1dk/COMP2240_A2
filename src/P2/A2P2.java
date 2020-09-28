@@ -51,6 +51,13 @@ public class A2P2 {
         ArrayList<Customer> customers = readCustomersFromFile(p, restaurant);
         ArrayList<Thread> customerThreads = generateCustomerThreads(customers);
         startThreads(customerThreads);
+        
+        //THIS SLEEP IS NEEDED, DONT REMOVE!
+        try {
+            Thread.sleep(1000);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
 
 
         while(true) {
@@ -62,12 +69,23 @@ public class A2P2 {
             } catch (Exception e) {
                 System.out.println(e);
             }
-            //if (lastJobFinished(customers)) {
-            //    //break;
-            //}
+            if (lastJobFinished(customers)) {
+                break;
+            }
         }
-        //System.out.println("DONE!");
+        System.out.println("DONE!");
+        this.printSummary(customers);
     }
+
+    private void printSummary(ArrayList<Customer> customers) {
+        System.out.println("\nSummary");
+        System.out.println(String.format("%-9s %-9s %-9s %-9s", "Customer", "Arrives", "Seats", "Leaves"));
+        for(Customer c : customers) {
+            System.out.println(String.format("%-9s %-9s %-9s %-9s"
+                    , c.getId(), c.getArriveTime(), c.getSeatedTime(), c.getLeaveTime()));
+        }
+    }
+
 
     private boolean lastJobFinished(ArrayList<Customer> customers) {
         for (Customer c : customers) {
