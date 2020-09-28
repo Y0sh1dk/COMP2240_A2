@@ -19,18 +19,46 @@ public class Customer implements Runnable {
         this.leaveTime = 0;
     }
 
-    Customer(int aTime, String id, int eTime) {
+    Customer(int aTime, String id, int eTime, Restaurant r) {
         this();
         this.arriveTime = aTime;
         this.id = id;
         this.eatTime = eTime;
+        this.restaurant = r;
     }
 
 
     @Override
     public void run() {
+        while (true) {
 
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            if (this.arriveTime <= A2P2.getTime()) {
+                if (this.restaurant.getAvailableSeats() > 0 ) { // If there are available seats
+                    try {
+                        this.restaurant.getLock().acquire();
+                        System.out.println(this.id + "Acquired lock");
+                        this.restaurant.getLock().release();
+                        System.out.println(this.id + "Releasing lock");
+                        while(true) { }
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } else { // The restaurant is full
+                    while (this.restaurant.getAvailableSeats() != 0) {
+//                Wait until restaurant is empty again
+
+//                Perform cleaning
+                    }
+                }
+            }
+        }
     }
-
 
 }

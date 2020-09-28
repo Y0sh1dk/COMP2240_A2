@@ -35,4 +35,8 @@ public class Restaurant {
         return lock;
     }
 
+    public int getAvailableSeats() { // Kind of redundant since can be done with getLock()
+        return this.lock.availablePermits();
+    }
+
 }

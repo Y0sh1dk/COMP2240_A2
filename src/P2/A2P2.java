@@ -4,11 +4,31 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class A2P2 {
+
+
+
+//    This avoids having a separate class for time (Hopefully?)
+    private static int time;
+
+    public static int getTime() {
+        return time;
+    }
+
+    public static void incrementTime() {
+        A2P2.time += 1;
+    }
+
+    public static void incrementTimeBy(int t) {
+        A2P2.time += t;
+    }
+
+
+
+
     public static void main(String[] args) {
         if (args.length != 1) { // If no args given, exit
             System.out.println("Usage: A1 [file]");
@@ -28,10 +48,27 @@ public class A2P2 {
 
     private void run(Path p) {
         Restaurant restaurant = new Restaurant();
-        ArrayList<Customer> customers = readCustomersFromFile(p);
+        ArrayList<Customer> customers = readCustomersFromFile(p, restaurant);
         ArrayList<Thread> customerThreads = generateCustomerThreads(customers);
 
+        System.out.println(restaurant.getLock().availablePermits());
+
         startThreads(customerThreads);
+
+        System.out.println(restaurant.getLock().availablePermits());
+
+        while(true) {
+            incrementTime();
+            System.out.println("Time: " + time);
+            System.out.println("Permits Available: " + restaurant.getLock().availablePermits());
+            try {
+                Thread.sleep(1000);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+
+
 
     }
 
@@ -50,7 +87,7 @@ public class A2P2 {
         return threads;
     }
 
-    private ArrayList<Customer> readCustomersFromFile(Path p) {
+    private ArrayList<Customer> readCustomersFromFile(Path p, Restaurant r) {
         Scanner inputStream;
         ArrayList<Customer> customers = new ArrayList<>();
         try {
@@ -65,9 +102,8 @@ public class A2P2 {
             if (!line.contains("END")) {
                 String[] splitLine = line.split(" ", 3);
                 customers.add(new Customer(Integer.parseInt(splitLine[0]),
-                        splitLine[1], Integer.parseInt(splitLine[2])));
+                        splitLine[1], Integer.parseInt(splitLine[2]), r));
             }
-
         }
         return customers;
     }
