@@ -31,7 +31,7 @@ public class Customer implements Runnable {
     @Override
     public void run() {
         while (true) {
-
+            //  Small sleep fixes some Issues
             try {
                 Thread.sleep(10);
             } catch (InterruptedException e) {
@@ -41,20 +41,26 @@ public class Customer implements Runnable {
             if (this.arriveTime <= A2P2.getTime()) {
                 if (this.restaurant.getAvailableSeats() > 0 ) { // If there are available seats
                     try {
+                        Thread.sleep(10);
                         this.restaurant.getLock().acquire();
+                        this.seatedTime = A2P2.getTime();
                         System.out.println(this.id + "Acquired lock");
-                        this.restaurant.getLock().release();
-                        System.out.println(this.id + "Releasing lock");
-                        while(true) { }
+                        while(true) {
+                            Thread.sleep(10); // Fixes everything
+                            if ((A2P2.getTime() - this.seatedTime) == this.eatTime) {
+                                this.restaurant.getLock().release();
+                                System.out.println(this.id + "          Releasing lock");
+                                break;
+                            }
+                        }
 
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 } else { // The restaurant is full
                     while (this.restaurant.getAvailableSeats() != 0) {
-//                Wait until restaurant is empty again
-
-//                Perform cleaning
+                    //    Wait till restaurant empty
+                    //    Do cleaning
                     }
                 }
             }
