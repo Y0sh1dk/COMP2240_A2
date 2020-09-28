@@ -1,6 +1,9 @@
 package P2;
 
 public class Customer implements Runnable {
+
+
+
     private int arriveTime;     // time customer arrives at restaurant
     private String id;             // customer id
     private int eatTime;        // how long the customer takes to eat
@@ -28,43 +31,63 @@ public class Customer implements Runnable {
     }
 
 
+
     @Override
     public void run() {
+        boolean finished = false;
         while (true) {
             //  Small sleep fixes some Issues
             try {
-                Thread.sleep(10);
+                Thread.sleep(50);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
-            if (this.arriveTime <= A2P2.getTime()) {
-                if (this.restaurant.getAvailableSeats() > 0 ) { // If there are available seats
+            if (this.arriveTime <= A2P2.getTime() ) {
+                if (this.restaurant.getAvailableSeats() > 0 && this.restaurant.isOpen()) { // If there are available seats
                     try {
-                        Thread.sleep(10);
+                        Thread.sleep(15);
                         this.restaurant.getLock().acquire();
+                        if (this.restaurant.getAvailableSeats() == 0) {
+                            this.restaurant.setOpen(false);
+                        }
                         this.seatedTime = A2P2.getTime();
                         System.out.println(this.id + "Acquired lock");
                         while(true) {
-                            Thread.sleep(10); // Fixes everything
+                            Thread.sleep(150); // Fixes everything
                             if ((A2P2.getTime() - this.seatedTime) == this.eatTime) {
                                 this.restaurant.getLock().release();
                                 System.out.println(this.id + "          Releasing lock");
+                                finished = true;
                                 break;
                             }
                         }
-
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 } else { // The restaurant is full
-                    while (this.restaurant.getAvailableSeats() != 0) {
-                    //    Wait till restaurant empty
-                    //    Do cleaning
+                    if (!Restaurant.isReadyToClean()) {
+                        while (true) {
+                            Restaurant.setReadyToClean(true);
+                            if (this.restaurant.getAvailableSeats() == Restaurant.getMaxCustomers()) { // Restaurant is empty again
+                                this.restaurant.performCleaning(); // Do cleaning
+                                //System.out.println("WE GOT HERE");
+                                break;
+                            }
+                        }
                     }
                 }
             }
+            //if (!restaurant.isOpen()) {
+            //    System.out.println("CLOSED");
+            //}
+            if(finished) {
+                this.leaveTime = A2P2.getTime();
+                break;
+            }
         }
     }
+
+
 
 }

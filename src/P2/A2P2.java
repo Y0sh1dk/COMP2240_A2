@@ -50,16 +50,17 @@ public class A2P2 {
         Restaurant restaurant = new Restaurant();
         ArrayList<Customer> customers = readCustomersFromFile(p, restaurant);
         ArrayList<Thread> customerThreads = generateCustomerThreads(customers);
-
-        System.out.println(restaurant.getLock().availablePermits());
-
         startThreads(customerThreads);
 
-        System.out.println(restaurant.getLock().availablePermits());
+        try {
+            Thread.sleep(1000);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
 
         while(true) {
             incrementTime();
-            System.out.println("Time: " + time);
+            System.out.println("\nTime: " + time);
             System.out.println("Permits Available: " + restaurant.getLock().availablePermits());
             try {
                 Thread.sleep(1000);
@@ -94,7 +95,7 @@ public class A2P2 {
             inputStream = new Scanner (new File(String.valueOf(p.getFileName())));
         } catch (Exception e) {
             System.out.println(e);
-            return null;
+            return null; // Already checks if file is valid previously so this should never happen
         }
 
         while (inputStream.hasNextLine()) {
