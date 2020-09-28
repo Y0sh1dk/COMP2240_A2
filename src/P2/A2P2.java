@@ -52,25 +52,30 @@ public class A2P2 {
         ArrayList<Thread> customerThreads = generateCustomerThreads(customers);
         startThreads(customerThreads);
 
-        try {
-            Thread.sleep(1000);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
 
         while(true) {
-            incrementTime();
             System.out.println("\nTime: " + time);
             System.out.println("Permits Available: " + restaurant.getLock().availablePermits());
+            incrementTime();
             try {
                 Thread.sleep(1000);
             } catch (Exception e) {
                 System.out.println(e);
             }
+            //if (lastJobFinished(customers)) {
+            //    //break;
+            //}
         }
+        //System.out.println("DONE!");
+    }
 
-
-
+    private boolean lastJobFinished(ArrayList<Customer> customers) {
+        for (Customer c : customers) {
+            if (c.getLeaveTime() == 0) { // presumes customer stays in shop for atleast 1 unit of time
+                return false;
+            }
+        }
+        return true; // all jobs finished
     }
 
     private void startThreads(ArrayList<Thread> threads) {

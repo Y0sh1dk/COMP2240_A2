@@ -36,9 +36,9 @@ public class Customer implements Runnable {
     public void run() {
         boolean finished = false;
         while (true) {
-            //  Small sleep fixes some Issues
+            //  Small sleep fixes some issues
             try {
-                Thread.sleep(50);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -46,18 +46,19 @@ public class Customer implements Runnable {
             if (this.arriveTime <= A2P2.getTime() ) {
                 if (this.restaurant.getAvailableSeats() > 0 && this.restaurant.isOpen()) { // If there are available seats
                     try {
-                        Thread.sleep(15);
+                        Thread.sleep(150); //  Small sleep fixes some issues
                         this.restaurant.getLock().acquire();
                         if (this.restaurant.getAvailableSeats() == 0) {
                             this.restaurant.setOpen(false);
                         }
                         this.seatedTime = A2P2.getTime();
-                        System.out.println(this.id + "Acquired lock");
+                        System.out.println(this.id + ": Acquired lock");
                         while(true) {
                             Thread.sleep(150); // Fixes everything
                             if ((A2P2.getTime() - this.seatedTime) == this.eatTime) {
                                 this.restaurant.getLock().release();
-                                System.out.println(this.id + "          Releasing lock");
+                                this.leaveTime = A2P2.getTime();
+                                System.out.println(this.id + ": Releasing lock");
                                 finished = true;
                                 break;
                             }
@@ -71,16 +72,13 @@ public class Customer implements Runnable {
                             Restaurant.setReadyToClean(true);
                             if (this.restaurant.getAvailableSeats() == Restaurant.getMaxCustomers()) { // Restaurant is empty again
                                 this.restaurant.performCleaning(); // Do cleaning
-                                //System.out.println("WE GOT HERE");
+                                Restaurant.setReadyToClean(false);
                                 break;
                             }
                         }
                     }
                 }
             }
-            //if (!restaurant.isOpen()) {
-            //    System.out.println("CLOSED");
-            //}
             if(finished) {
                 this.leaveTime = A2P2.getTime();
                 break;
@@ -89,5 +87,52 @@ public class Customer implements Runnable {
     }
 
 
+    public String getId() {
+        return id;
+    }
+
+    public int getArriveTime() {
+        return arriveTime;
+    }
+
+    public int getEatTime() {
+        return eatTime;
+    }
+
+    public int getLeaveTime() {
+        return leaveTime;
+    }
+
+    public int getSeatedTime() {
+        return seatedTime;
+    }
+
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setArriveTime(int arriveTime) {
+        this.arriveTime = arriveTime;
+    }
+
+    public void setEatTime(int eatTime) {
+        this.eatTime = eatTime;
+    }
+
+    public void setLeaveTime(int leaveTime) {
+        this.leaveTime = leaveTime;
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
+    }
+
+    public void setSeatedTime(int seatedTime) {
+        this.seatedTime = seatedTime;
+    }
 
 }

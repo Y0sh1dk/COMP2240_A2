@@ -43,18 +43,16 @@ public class Restaurant {
     }
 
     public void performCleaning() {
-        //this.isOpen = false;
-        System.out.println("CLEANING");
+        System.out.println("---PERFORMING CLEANING---");
         int cleaningStart = A2P2.getTime();
-        while (A2P2.getTime() - cleaningStart <= Restaurant.getCleaningTime()) {
+        while (A2P2.getTime() - cleaningStart < Restaurant.getCleaningTime()) {
             try {
-                Thread.sleep(50);
+                Thread.sleep(100);
             } catch (Exception e) {
                 System.out.println(e);
             }
         }
-        // Cleaning done
-        System.out.println("CLEANING DONE");
+        System.out.println("---CLEANING DONE---");
         this.isOpen = true;
     }
 
