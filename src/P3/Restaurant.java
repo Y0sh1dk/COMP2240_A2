@@ -1,5 +1,6 @@
 package P3;
 
+import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
 
 public class Restaurant {
@@ -10,6 +11,24 @@ public class Restaurant {
     private Semaphore lock = new Semaphore(MAX_CUSTOMERS, true);
     private Semaphore cleaningLock = new Semaphore(1, true);
 
+    private ArrayList<Seat> seats = new ArrayList<Seat>();
+
+    Restaurant() {
+        // Initialize seats
+        for (int i = 1; i <= MAX_CUSTOMERS; i++) {
+            this.seats.add(new Seat(i, this));
+        }
+    }
+
+    // checks if all seats are taken
+    public boolean isFull() {
+        for (Seat s : this.seats) {
+            if (!s.isTaken()) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     public static boolean isReadyToClean() {
         return readyToClean;
