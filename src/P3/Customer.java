@@ -2,8 +2,6 @@ package P3;
 
 public class Customer implements Runnable {
 
-
-
     private int arriveTime;     // time customer arrives at restaurant
     private String id;             // customer id
     private int eatTime;        // how long the customer takes to eat
@@ -30,8 +28,6 @@ public class Customer implements Runnable {
         this.restaurant = r;
     }
 
-
-
     @Override
     public void run() {
         boolean finished = false;
@@ -43,45 +39,13 @@ public class Customer implements Runnable {
                 e.printStackTrace();
             }
 
-            if (this.arriveTime <= A2P3.getTime() ) {
-                if (this.restaurant.getAvailableSeats() > 0 && this.restaurant.isOpen()) { // If there are available seats
-                    try {
-                        Thread.sleep(150); //  Small sleep fixes some issues
-                        this.restaurant.getLock().acquire();
-                        if (this.restaurant.getAvailableSeats() == 0) {
-                            this.restaurant.setOpen(false);
-                        }
-                        this.seatedTime = A2P3.getTime();
-                        //System.out.println(this.id + ": Acquired lock");
-                        while(true) {
-                            Thread.sleep(150); // Fixes everything
-                            if ((A2P3.getTime() - this.seatedTime) == this.eatTime) {
-                                this.restaurant.getLock().release();
-                                this.leaveTime = A2P3.getTime();
-                                //System.out.println(this.id + ": Releasing lock");
-                                finished = true;
-                                break;
-                            }
-                        }
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                } else { // The restaurant is full
-                    if (!Restaurant.isReadyToClean()) {
-                        while (true) {
-                            Restaurant.setReadyToClean(true);
-                            if (this.restaurant.getAvailableSeats() == Restaurant.getMaxCustomers()) { // Restaurant is empty again
-                                this.restaurant.performCleaning(); // Do cleaning
-                                Restaurant.setReadyToClean(false);
-                                break;
-                            }
-                        }
-                    }
+            if (this.arriveTime <= A2P3.getTime()) {
+                try {
+                    restaurant.tryToSeat();
+                    break; // ?
+                } catch (SeatUnavailableException e) {
+                    e.printStackTrace();
                 }
-            }
-            if(finished) {
-                this.leaveTime = A2P3.getTime();
-                break;
             }
         }
     }

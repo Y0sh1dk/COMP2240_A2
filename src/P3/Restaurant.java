@@ -3,6 +3,14 @@ package P3;
 import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
 
+
+
+class SeatUnavailableException extends Exception { // default visibility scope therefore only visible within package 'P3'
+    SeatUnavailableException() {
+        super();
+    }
+}
+
 public class Restaurant {
     private static final int CLEANING_TIME = 5;
     private static final int MAX_CUSTOMERS = 5;
@@ -11,7 +19,7 @@ public class Restaurant {
     private Semaphore lock = new Semaphore(MAX_CUSTOMERS, true);
     private Semaphore cleaningLock = new Semaphore(1, true);
 
-    private ArrayList<Seat> seats = new ArrayList<Seat>();
+    private ArrayList<Seat> seats = new ArrayList<>();
 
     Restaurant() {
         // Initialize seats
@@ -29,6 +37,23 @@ public class Restaurant {
         }
         return true;
     }
+
+    public synchronized void tryToSeat() throws SeatUnavailableException {
+        if (!this.isFull()) {
+            for (Seat s : this.seats) {
+                try {
+                    s.acquireSeat();
+                    return;
+                } catch (SeatTakenException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            throw new SeatUnavailableException();
+        }
+    }
+
+
 
     public static boolean isReadyToClean() {
         return readyToClean;
@@ -78,6 +103,6 @@ public class Restaurant {
     }
 
     public void setOpen(boolean open) {
-        isOpen = open;
+        this.isOpen = open;
     }
 }

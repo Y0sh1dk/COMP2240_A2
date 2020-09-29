@@ -1,9 +1,17 @@
 package P3;
 
+
+class SeatTakenException extends Exception { // default visibility scope therefore only visible within package 'P3'
+    SeatTakenException() {
+        super();
+    }
+}
+
 public class Seat {
     private int id;
     private Restaurant restaurant;
     private boolean isTaken;
+    //TODO: Seat has customer as a member?
 
     Seat(int id, Restaurant r) {
         this.id = id;
@@ -11,15 +19,17 @@ public class Seat {
         this.isTaken = false;
     }
 
-    public synchronized void acquire() {
-        this.isTaken = true;
 
-        // do stuff
-
+    public void acquireSeat() throws SeatTakenException {
+        if (this.isTaken) {
+            throw new SeatTakenException();
+        }
+        synchronized (this) {
+            this.isTaken = true;
+            // do stuff
+        }
         this.isTaken = false;
-
     }
-
 
     public Restaurant getRestaurant() {
         return restaurant;
