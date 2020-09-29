@@ -1,7 +1,5 @@
-package P2;
+package P3;
 
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.concurrent.Semaphore;
 
 public class Restaurant {
@@ -44,8 +42,8 @@ public class Restaurant {
 
     public void performCleaning() {
         //System.out.println("---PERFORMING CLEANING---");
-        int cleaningStart = A2P2.getTime();
-        while (A2P2.getTime() - cleaningStart < Restaurant.getCleaningTime()) {
+        int cleaningStart = A2P3.getTime();
+        while (A2P3.getTime() - cleaningStart < Restaurant.getCleaningTime()) {
             try {
                 Thread.sleep(100);
             } catch (Exception e) {

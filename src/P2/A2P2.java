@@ -9,9 +9,7 @@ import java.util.Scanner;
 
 public class A2P2 {
 
-
-
-//    This avoids having a separate class for time (Hopefully?)
+//    This avoids having a separate class for time
     private static int time;
 
     public static int getTime() {
@@ -25,8 +23,6 @@ public class A2P2 {
     public static void incrementTimeBy(int t) {
         A2P2.time += t;
     }
-
-
 
 
     public static void main(String[] args) {
@@ -51,18 +47,18 @@ public class A2P2 {
         ArrayList<Customer> customers = readCustomersFromFile(p, restaurant);
         ArrayList<Thread> customerThreads = generateCustomerThreads(customers);
         startThreads(customerThreads);
-        
+
         //THIS SLEEP IS NEEDED, DONT REMOVE!
         try {
-            Thread.sleep(1000);
+            Thread.sleep(1000); // DONT REMOVE
         } catch (Exception e) {
             System.out.println(e);
         }
 
 
         while(true) {
-            System.out.println("\nTime: " + time);
-            System.out.println("Permits Available: " + restaurant.getLock().availablePermits());
+            System.out.println("Running Simulation... (time=" + time + ")");
+            //System.out.println("Permits Available: " + restaurant.getLock().availablePermits());
             incrementTime();
             try {
                 Thread.sleep(1000);
@@ -73,7 +69,7 @@ public class A2P2 {
                 break;
             }
         }
-        System.out.println("DONE!");
+        System.out.println("Simulation Done!");
         this.printSummary(customers);
     }
 
@@ -131,7 +127,5 @@ public class A2P2 {
         }
         return customers;
     }
-
-
 
 }

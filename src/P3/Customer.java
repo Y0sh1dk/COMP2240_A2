@@ -1,4 +1,4 @@
-package P2;
+package P3;
 
 public class Customer implements Runnable {
 
@@ -43,7 +43,7 @@ public class Customer implements Runnable {
                 e.printStackTrace();
             }
 
-            if (this.arriveTime <= A2P2.getTime() ) {
+            if (this.arriveTime <= A2P3.getTime() ) {
                 if (this.restaurant.getAvailableSeats() > 0 && this.restaurant.isOpen()) { // If there are available seats
                     try {
                         Thread.sleep(150); //  Small sleep fixes some issues
@@ -51,13 +51,13 @@ public class Customer implements Runnable {
                         if (this.restaurant.getAvailableSeats() == 0) {
                             this.restaurant.setOpen(false);
                         }
-                        this.seatedTime = A2P2.getTime();
+                        this.seatedTime = A2P3.getTime();
                         //System.out.println(this.id + ": Acquired lock");
                         while(true) {
                             Thread.sleep(150); // Fixes everything
-                            if ((A2P2.getTime() - this.seatedTime) == this.eatTime) {
+                            if ((A2P3.getTime() - this.seatedTime) == this.eatTime) {
                                 this.restaurant.getLock().release();
-                                this.leaveTime = A2P2.getTime();
+                                this.leaveTime = A2P3.getTime();
                                 //System.out.println(this.id + ": Releasing lock");
                                 finished = true;
                                 break;
@@ -80,7 +80,7 @@ public class Customer implements Runnable {
                 }
             }
             if(finished) {
-                this.leaveTime = A2P2.getTime();
+                this.leaveTime = A2P3.getTime();
                 break;
             }
         }
