@@ -2,10 +2,10 @@ package P1;
 
 import java.util.ArrayList;
 
-public class A2P1 {
+public class P1 {
     public static void main(String[] args) { // Example: 'N=2, S=2'
         if (args.length != 2) { // If wrong args amount given
-            System.out.println("Usage: A2P1 2 2");
+            System.out.println("Usage: P1 2 2");
             return;
         }
         int northFarmers;
@@ -15,10 +15,10 @@ public class A2P1 {
             southFarmers = Integer.parseInt(args[1]);
         } catch (Exception e) {
             System.out.println(e);
-            System.out.println("Usage: A2P1 2 2");
+            System.out.println("Usage: P1 2 2");
             return;
         }
-        A2P1 main = new A2P1();
+        P1 main = new P1();
         main.run(northFarmers, southFarmers);
     }
 
@@ -26,9 +26,7 @@ public class A2P1 {
         Bridge bridge = new Bridge();
         ArrayList<Farmer> farmerList = generateFarmers(northFarmers, southFarmers, bridge);
         ArrayList<Thread> farmerThreads = generateFarmerThreads(farmerList);
-
         startThreads(farmerThreads);
-        System.out.println("test");
     }
 
     private ArrayList<Farmer> generateFarmers(int n, int s, Bridge b) {

@@ -1,7 +1,5 @@
 package P1;
 
-import java.util.concurrent.*;
-
 
 public class Farmer implements Runnable { // Implements runnable so it can be ran as a separate thread
     private int farmerID;
@@ -11,6 +9,25 @@ public class Farmer implements Runnable { // Implements runnable so it can be ra
     private String destination;
     private String currentLocation;
     private Bridge bridge;
+
+    Farmer() {
+        this.farmerID = 0;
+        this.stepsTaken = 0;
+        this.farmerName = "";
+        this.homeLocation = "";
+        this.destination = "";
+        this.currentLocation = "";
+        this.bridge = null;
+    }
+
+    Farmer(int id, String home, Bridge b) {
+        this();
+        this.farmerID = id;
+        this.homeLocation = home;
+        this.currentLocation = this.homeLocation;
+        this.bridge = b;
+        this.generateNameAndDest();
+    }
 
     @Override
     public void run() {
@@ -37,25 +54,6 @@ public class Farmer implements Runnable { // Implements runnable so it can be ra
             }
             System.out.println(this.farmerName + ": Waiting for bridge. Going towards " + this.destination);
         }
-    }
-
-    Farmer() {
-        this.farmerID = 0;
-        this.stepsTaken = 0;
-        this.farmerName = "";
-        this.homeLocation = "";
-        this.destination = "";
-        this.currentLocation = "";
-        this.bridge = null;
-    }
-
-    Farmer(int id, String home, Bridge b) {
-        this();
-        this.farmerID = id;
-        this.homeLocation = home;
-        this.currentLocation = this.homeLocation;
-        this.bridge = b;
-        this.generateNameAndDest();
     }
 
     private void generateNameAndDest() {

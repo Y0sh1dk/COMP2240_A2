@@ -1,32 +1,30 @@
 package P2;
 
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.concurrent.Semaphore;
 
 public class Restaurant {
-    private static final int CLEANING_TIME = 5;
-    private static final int MAX_CUSTOMERS = 5;
-    private static boolean readyToClean = false;
+    private final int CLEANING_TIME = 5;
+    private final int MAX_CUSTOMERS = 5;
+    private boolean readyToClean = false;
     private boolean isOpen = true;
     private Semaphore lock = new Semaphore(MAX_CUSTOMERS, true);
     private Semaphore cleaningLock = new Semaphore(1, true);
 
 
-    public static boolean isReadyToClean() {
-        return readyToClean;
+    public boolean isReadyToClean() {
+        return this.readyToClean;
     }
 
-    public static void setReadyToClean(boolean readyToClean) {
-        Restaurant.readyToClean = readyToClean;
+    public void setReadyToClean(boolean readyToClean) {
+        this.readyToClean = readyToClean;
     }
 
-    public static int getCleaningTime() {
-        return CLEANING_TIME;
+    public int getCleaningTime() {
+        return this.CLEANING_TIME;
     }
 
-    public static int getMaxCustomers() {
-        return MAX_CUSTOMERS;
+    public int getMaxCustomers() {
+        return this.MAX_CUSTOMERS;
     }
 
     public Semaphore getLock() {
@@ -43,8 +41,8 @@ public class Restaurant {
 
     public void performCleaning() {
         //System.out.println("---PERFORMING CLEANING---");
-        int cleaningStart = A2P2.getTime();
-        while (A2P2.getTime() - cleaningStart < Restaurant.getCleaningTime()) {
+        int cleaningStart = P2.getTime();
+        while (P2.getTime() - cleaningStart < this.getCleaningTime()) {
             try {
                 Thread.sleep(100);
             } catch (Exception e) {

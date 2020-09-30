@@ -1,18 +1,14 @@
 package P2;
 
+
 public class Customer implements Runnable {
-
-
-
     private int arriveTime;     // time customer arrives at restaurant
     private String id;             // customer id
     private int eatTime;        // how long the customer takes to eat
-
     private int seatedTime;     // time customer got seated
     private int leaveTime;      // time customer left
-
-
     private Restaurant restaurant;
+
 
     Customer() {
         this.arriveTime = 0;
@@ -30,8 +26,6 @@ public class Customer implements Runnable {
         this.restaurant = r;
     }
 
-
-
     @Override
     public void run() {
         boolean finished = false;
@@ -40,10 +34,10 @@ public class Customer implements Runnable {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
             }
 
-            if (this.arriveTime <= A2P2.getTime() ) {
+            if (this.arriveTime <= P2.getTime() ) {
                 if (this.restaurant.getAvailableSeats() > 0 && this.restaurant.isOpen()) { // If there are available seats
                     try {
                         Thread.sleep(150); //  Small sleep fixes some issues
@@ -51,28 +45,28 @@ public class Customer implements Runnable {
                         if (this.restaurant.getAvailableSeats() == 0) {
                             this.restaurant.setOpen(false);
                         }
-                    this.seatedTime = A2P2.getTime();
+                    this.seatedTime = P2.getTime();
                         //System.out.println(this.id + ": Acquired lock");
                         while(true) {
                             Thread.sleep(150); // Fixes everything
-                            if ((A2P2.getTime() - this.seatedTime) == this.eatTime) {
+                            if ((P2.getTime() - this.seatedTime) == this.eatTime) {
                                 this.restaurant.getLock().release();
-                                this.leaveTime = A2P2.getTime();
+                                this.leaveTime = P2.getTime();
                                 //System.out.println(this.id + ": Releasing lock");
                                 finished = true;
                                 break;
                             }
                         }
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        //e.printStackTrace();
                     }
                 } else { // The restaurant is full
-                    if (!Restaurant.isReadyToClean()) {
+                    if (!this.restaurant.isReadyToClean()) {
                         while (true) {
-                            Restaurant.setReadyToClean(true);
-                            if (this.restaurant.getAvailableSeats() == Restaurant.getMaxCustomers()) { // Restaurant is empty again
+                            this.restaurant.setReadyToClean(true);
+                            if (this.restaurant.getAvailableSeats() == this.restaurant.getMaxCustomers()) { // Restaurant is empty again
                                 this.restaurant.performCleaning(); // Do cleaning
-                                Restaurant.setReadyToClean(false);
+                                this.restaurant.setReadyToClean(false);
                                 break;
                             }
                         }
@@ -80,12 +74,11 @@ public class Customer implements Runnable {
                 }
             }
             if(finished) {
-                this.leaveTime = A2P2.getTime();
+                this.leaveTime = P2.getTime();
                 break;
             }
         }
     }
-
 
     public String getId() {
         return id;

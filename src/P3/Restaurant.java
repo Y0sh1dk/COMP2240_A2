@@ -99,8 +99,8 @@ public class Restaurant {
         //System.out.println("---PERFORMING CLEANING---");
         this.isOpen = false;
         this.readyToClean = false;
-        int cleaningStart = A2P3.getTime();
-        while (A2P3.getTime() - cleaningStart < this.getCleaningTime()) {
+        int cleaningStart = P3.getTime();
+        while (P3.getTime() - cleaningStart < this.getCleaningTime()) {
             try {
                 Thread.sleep(150);
             } catch (InterruptedException e) {

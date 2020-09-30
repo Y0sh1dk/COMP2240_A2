@@ -1,4 +1,4 @@
-package P3;
+package P2;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -7,9 +7,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class A2P3 {
-
-    //    This avoids having a separate class for time, static so can be accessed from other classes without passing it
+public class P2 {
+//    This avoids having a separate class for time
     private static int time = 0;
 
     public static int getTime() {
@@ -17,11 +16,11 @@ public class A2P3 {
     }
 
     public static void incrementTime() {
-        A2P3.time += 1;
+        P2.time += 1;
     }
 
     public static void incrementTimeBy(int t) {
-        A2P3.time += t;
+        P2.time += t;
     }
 
     public static void main(String[] args) {
@@ -37,7 +36,7 @@ public class A2P3 {
             return;
         }
 //        If given file exits, run method "run"
-        A2P3 main = new A2P3();
+        P2 main = new P2();
         main.run(filePath);
     }
 
@@ -49,11 +48,10 @@ public class A2P3 {
 
         //THIS SLEEP IS NEEDED, DONT REMOVE!
         try {
-            Thread.sleep(1000); // likely not this long
+            Thread.sleep(1000); // DONT REMOVE
         } catch (Exception e) {
             System.out.println(e);
         }
-
         while(true) {
             System.out.println("Running Simulation... (time=" + time + ")");
             //System.out.println("Permits Available: " + restaurant.getLock().availablePermits());
@@ -79,6 +77,7 @@ public class A2P3 {
                     , c.getId(), c.getArriveTime(), c.getSeatedTime(), c.getLeaveTime()));
         }
     }
+
 
     private boolean lastJobFinished(ArrayList<Customer> customers) {
         for (Customer c : customers) {

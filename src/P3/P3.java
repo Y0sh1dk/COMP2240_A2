@@ -1,4 +1,4 @@
-package P2;
+package P3;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -7,9 +7,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class A2P2 {
+public class P3 {
 
-//    This avoids having a separate class for time
+    //    This avoids having a separate class for time, static so can be accessed from other classes without passing it
     private static int time = 0;
 
     public static int getTime() {
@@ -17,13 +17,12 @@ public class A2P2 {
     }
 
     public static void incrementTime() {
-        A2P2.time += 1;
+        P3.time += 1;
     }
 
     public static void incrementTimeBy(int t) {
-        A2P2.time += t;
+        P3.time += t;
     }
-
 
     public static void main(String[] args) {
         if (args.length != 1) { // If no args given, exit
@@ -38,7 +37,7 @@ public class A2P2 {
             return;
         }
 //        If given file exits, run method "run"
-        A2P2 main = new A2P2();
+        P3 main = new P3();
         main.run(filePath);
     }
 
@@ -50,11 +49,10 @@ public class A2P2 {
 
         //THIS SLEEP IS NEEDED, DONT REMOVE!
         try {
-            Thread.sleep(1000); // DONT REMOVE
+            Thread.sleep(1000); // likely not this long
         } catch (Exception e) {
             System.out.println(e);
         }
-
 
         while(true) {
             System.out.println("Running Simulation... (time=" + time + ")");
@@ -81,7 +79,6 @@ public class A2P2 {
                     , c.getId(), c.getArriveTime(), c.getSeatedTime(), c.getLeaveTime()));
         }
     }
-
 
     private boolean lastJobFinished(ArrayList<Customer> customers) {
         for (Customer c : customers) {
@@ -116,7 +113,6 @@ public class A2P2 {
             System.out.println(e);
             return null; // Already checks if file is valid previously so this should never happen
         }
-
         while (inputStream.hasNextLine()) {
             String line = inputStream.nextLine();
             if (!line.contains("END")) {

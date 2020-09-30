@@ -19,7 +19,7 @@ public class Seat {
         }
         this.isTaken = true;
         c.setSeat(this);
-        c.setSeatedTime(A2P3.getTime());
+        c.setSeatedTime(P3.getTime());
         c.setSeated(true);
         //System.out.println("Seated:" + c.getId() + " at time " + c.getSeatedTime() + " in seat id: " + this.id);
     }

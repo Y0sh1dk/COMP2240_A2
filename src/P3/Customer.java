@@ -40,7 +40,7 @@ public class Customer implements Runnable {
                 e.printStackTrace();
             }
 
-            if (this.arriveTime <= A2P3.getTime()) {
+            if (this.arriveTime <= P3.getTime()) {
                 try {
                     restaurant.tryToSeat(this);
                     while(true) {
@@ -49,8 +49,8 @@ public class Customer implements Runnable {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        if ((A2P3.getTime() - this.getSeatedTime()) == this.getEatTime()) {
-                            this.setLeaveTime(A2P3.getTime());
+                        if ((P3.getTime() - this.getSeatedTime()) == this.getEatTime()) {
+                            this.setLeaveTime(P3.getTime());
                             //System.out.println("Leaving " + this.getId() + " at time " + this.getLeaveTime() + " in seat id: " + seat.getId());
                             seat.setTaken(false);
                             this.seat = null;
