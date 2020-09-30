@@ -51,7 +51,7 @@ public class Customer implements Runnable {
                         if (this.restaurant.getAvailableSeats() == 0) {
                             this.restaurant.setOpen(false);
                         }
-                        this.seatedTime = A2P2.getTime();
+                    this.seatedTime = A2P2.getTime();
                         //System.out.println(this.id + ": Acquired lock");
                         while(true) {
                             Thread.sleep(150); // Fixes everything

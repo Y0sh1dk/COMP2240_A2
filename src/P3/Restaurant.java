@@ -51,7 +51,7 @@ public class Restaurant {
         return true;
     }
 
-    public void tryToSeat(Customer c) throws SeatUnavailableException {
+    public  synchronized void tryToSeat(Customer c) throws SeatUnavailableException {
         if (this.isOpen && !this.readyToClean) {
             if (!this.isFull()) {
                 for (Seat s : this.seats) {

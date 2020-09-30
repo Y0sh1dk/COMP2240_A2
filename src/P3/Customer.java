@@ -7,6 +7,8 @@ public class Customer implements Runnable {
     private int eatTime;            // how long the customer takes to eat
     private int seatedTime;         // time customer got seated
     private int leaveTime;          // time customer left
+    private boolean seated;
+    private Seat seat;
     private Restaurant restaurant;
 
 
@@ -16,6 +18,7 @@ public class Customer implements Runnable {
         this.eatTime = 0;
         this.seatedTime = 0;
         this.leaveTime = 0;
+        this.seated = false;
     }
 
     Customer(int aTime, String id, int eTime, Restaurant r) {
@@ -40,10 +43,28 @@ public class Customer implements Runnable {
             if (this.arriveTime <= A2P3.getTime()) {
                 try {
                     restaurant.tryToSeat(this);
+                    while(true) {
+
+                        try {
+                            Thread.sleep(150); // Fixes everything
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                        if ((A2P3.getTime() - this.getSeatedTime()) == this.getEatTime()) {
+                            this.setLeaveTime(A2P3.getTime());
+                            System.out.println("Leaving " + this.getId() + " at time " + this.getLeaveTime() + " in seat id: " + this.id);
+                            seat.setTaken(false);
+                            break;
+                        }
+
+                    }
                     break; // ?
                 } catch (SeatUnavailableException e) {
                     //e.printStackTrace();
                 }
+
+
             }
         }
     }
@@ -96,4 +117,19 @@ public class Customer implements Runnable {
         this.seatedTime = seatedTime;
     }
 
+    public boolean isSeated() {
+        return seated;
+    }
+
+    public void setSeated(boolean seated) {
+        this.seated = seated;
+    }
+
+    public Seat getSeat() {
+        return seat;
+    }
+
+    public void setSeat(Seat seat) {
+        this.seat = seat;
+    }
 }

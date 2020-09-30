@@ -21,7 +21,6 @@ public class Restaurant {
         Restaurant.readyToClean = readyToClean;
     }
 
-
     public static int getCleaningTime() {
         return CLEANING_TIME;
     }
