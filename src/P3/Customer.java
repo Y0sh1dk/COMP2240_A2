@@ -44,27 +44,23 @@ public class Customer implements Runnable {
                 try {
                     restaurant.tryToSeat(this);
                     while(true) {
-
                         try {
                             Thread.sleep(150); // Fixes everything
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-
                         if ((A2P3.getTime() - this.getSeatedTime()) == this.getEatTime()) {
                             this.setLeaveTime(A2P3.getTime());
-                            System.out.println("Leaving " + this.getId() + " at time " + this.getLeaveTime() + " in seat id: " + this.id);
+                            //System.out.println("Leaving " + this.getId() + " at time " + this.getLeaveTime() + " in seat id: " + seat.getId());
                             seat.setTaken(false);
+                            this.seat = null;
                             break;
                         }
-
                     }
-                    break; // ?
+                    break; // Kills thread once done
                 } catch (SeatUnavailableException e) {
                     //e.printStackTrace();
                 }
-
-
             }
         }
     }

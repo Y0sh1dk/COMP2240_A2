@@ -1,12 +1,9 @@
 package P3;
 
-
-
 public class Seat {
     private int id;
     private Restaurant restaurant;
     private boolean isTaken;
-    //TODO: Seat has customer as a member?
 
     Seat(int id, Restaurant r) {
         this.id = id;
@@ -15,38 +12,16 @@ public class Seat {
     }
 
 
-    public void acquireSeat(Customer c) throws SeatUnavailableException {
+    // Doesnt need to be synchronized because block that calls it is synchronized, better to be safe
+    public synchronized void acquireSeat(Customer c) throws SeatUnavailableException {
         if (this.isTaken) {
             throw new SeatUnavailableException();
         }
         this.isTaken = true;
-
         c.setSeat(this);
         c.setSeatedTime(A2P3.getTime());
         c.setSeated(true);
-        System.out.println("Seated:" + c.getId() + " at time " + c.getSeatedTime() + " in seat id: " + this.id);
-
-        //synchronized (this) {
-        //    this.isTaken = true;
-        //    c.setSeatedTime(A2P3.getTime());
-        //    System.out.println("Seated:" + c.getId() + " at time " + c.getSeatedTime() + " in seat id: " + this.id);
-        //    while(true) {
-        //
-        //        try {
-        //            Thread.sleep(150); // Fixes everything
-        //        } catch (InterruptedException e) {
-        //            e.printStackTrace();
-        //        }
-        //
-        //        if ((A2P3.getTime() - c.getSeatedTime()) == c.getEatTime()) {
-        //            c.setLeaveTime(A2P3.getTime());
-        //            System.out.println("Leaving " + c.getId() + " at time " + c.getLeaveTime() + " in seat id: " + this.id);
-        //            this.isTaken = false;
-        //            break;
-        //        }
-        //    }
-        //}
-
+        //System.out.println("Seated:" + c.getId() + " at time " + c.getSeatedTime() + " in seat id: " + this.id);
     }
 
     public Restaurant getRestaurant() {

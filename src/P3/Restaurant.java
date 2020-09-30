@@ -1,8 +1,6 @@
 package P3;
 
 import java.util.ArrayList;
-import java.util.concurrent.Semaphore;
-
 
 class SeatUnavailableException extends Exception { // default visibility scope therefore only visible within package 'P3'
     SeatUnavailableException() {
@@ -17,12 +15,12 @@ class CleaningInProgressException extends Exception { // default visibility scop
 }
 
 public class Restaurant {
-    private static final int CLEANING_TIME = 5;
-    private static final int MAX_CUSTOMERS = 5;
+    private final int CLEANING_TIME = 5;
+    private final int MAX_CUSTOMERS = 5;
     private boolean readyToClean = false;
     private boolean isOpen = true;
-
     private ArrayList<Seat> seats = new ArrayList<>();
+
 
     Restaurant() {
         // Initialize seats
@@ -51,7 +49,7 @@ public class Restaurant {
         return true;
     }
 
-    public  synchronized void tryToSeat(Customer c) throws SeatUnavailableException {
+    public synchronized void tryToSeat(Customer c) throws SeatUnavailableException {
         if (this.isOpen && !this.readyToClean) {
             if (!this.isFull()) {
                 for (Seat s : this.seats) {
@@ -59,6 +57,7 @@ public class Restaurant {
                         s.acquireSeat(c);
                         break;
                     } catch (SeatUnavailableException e) {
+                        //e.printStackTrace();
                     }
                 }
             } else {
@@ -70,13 +69,12 @@ public class Restaurant {
                 try {
                     this.performCleaning();
                 } catch (CleaningInProgressException e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
                 }
             }
             throw new SeatUnavailableException();
         }
     }
-
 
     public boolean isReadyToClean() {
         return readyToClean;
@@ -86,12 +84,11 @@ public class Restaurant {
         this.readyToClean = readyToClean;
     }
 
-
-    public static int getCleaningTime() {
+    public int getCleaningTime() {
         return CLEANING_TIME;
     }
 
-    public static int getMaxCustomers() {
+    public int getMaxCustomers() {
         return MAX_CUSTOMERS;
     }
 
@@ -99,24 +96,24 @@ public class Restaurant {
         if (!isOpen) {
             throw new CleaningInProgressException();
         }
-        System.out.println("---PERFORMING CLEANING---");
+        //System.out.println("---PERFORMING CLEANING---");
         this.isOpen = false;
         this.readyToClean = false;
         int cleaningStart = A2P3.getTime();
-        while (A2P3.getTime() - cleaningStart < Restaurant.getCleaningTime()) {
+        while (A2P3.getTime() - cleaningStart < this.getCleaningTime()) {
             try {
                 Thread.sleep(150);
-            } catch (Exception e) {
-                System.out.println(e);
+            } catch (InterruptedException e) {
+                //e.printStackTrace();
             }
         }
-        System.out.println("---CLEANING DONE---");
+        //System.out.println("---CLEANING DONE---");
         this.isOpen = true;
 
         try {
             Thread.sleep(150);
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
@@ -127,4 +124,5 @@ public class Restaurant {
     public void setOpen(boolean open) {
         this.isOpen = open;
     }
+
 }

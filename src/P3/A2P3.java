@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class A2P3 {
 
-    //    This avoids having a separate class for time
+    //    This avoids having a separate class for time, static so can be accessed from other classes without passing it
     private static int time = 0;
 
     public static int getTime() {
@@ -23,7 +23,6 @@ public class A2P3 {
     public static void incrementTimeBy(int t) {
         A2P3.time += t;
     }
-
 
     public static void main(String[] args) {
         if (args.length != 1) { // If no args given, exit
@@ -50,11 +49,10 @@ public class A2P3 {
 
         //THIS SLEEP IS NEEDED, DONT REMOVE!
         try {
-            Thread.sleep(2000); // DONT REMOVE
+            Thread.sleep(1000); // likely not this long
         } catch (Exception e) {
             System.out.println(e);
         }
-
 
         while(true) {
             System.out.println("Running Simulation... (time=" + time + ")");
@@ -81,7 +79,6 @@ public class A2P3 {
                     , c.getId(), c.getArriveTime(), c.getSeatedTime(), c.getLeaveTime()));
         }
     }
-
 
     private boolean lastJobFinished(ArrayList<Customer> customers) {
         for (Customer c : customers) {
@@ -116,7 +113,6 @@ public class A2P3 {
             System.out.println(e);
             return null; // Already checks if file is valid previously so this should never happen
         }
-
         while (inputStream.hasNextLine()) {
             String line = inputStream.nextLine();
             if (!line.contains("END")) {
