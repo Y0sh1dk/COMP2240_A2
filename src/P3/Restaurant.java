@@ -4,9 +4,14 @@ import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
 
 
-
 class SeatUnavailableException extends Exception { // default visibility scope therefore only visible within package 'P3'
     SeatUnavailableException() {
+        super();
+    }
+}
+
+class CleaningInProgressException extends Exception { // default visibility scope therefore only visible within package 'P3'
+    CleaningInProgressException() {
         super();
     }
 }
@@ -14,10 +19,8 @@ class SeatUnavailableException extends Exception { // default visibility scope t
 public class Restaurant {
     private static final int CLEANING_TIME = 5;
     private static final int MAX_CUSTOMERS = 5;
-    private static boolean readyToClean = false;
+    private boolean readyToClean = false;
     private boolean isOpen = true;
-    private Semaphore lock = new Semaphore(MAX_CUSTOMERS, true);
-    private Semaphore cleaningLock = new Semaphore(1, true);
 
     private ArrayList<Seat> seats = new ArrayList<>();
 
@@ -38,31 +41,50 @@ public class Restaurant {
         return true;
     }
 
+    // checks if no seats are taken
+    public boolean isEmpty() {
+        for (Seat s : this.seats) {
+            if (s.isTaken()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public void tryToSeat(Customer c) throws SeatUnavailableException {
-        if (!this.isFull()) {
-            //synchronized (this) { // maybe?
+        if (this.isOpen && !this.readyToClean) {
+            if (!this.isFull()) {
                 for (Seat s : this.seats) {
                     try {
                         s.acquireSeat(c);
                         break;
                     } catch (SeatUnavailableException e) {
-                        //e.printStackTrace();
                     }
                 }
-            //}
+            } else {
+                this.readyToClean = true;
+                throw new SeatUnavailableException();
+            }
         } else {
+            if (this.isEmpty() && this.readyToClean) {
+                try {
+                    this.performCleaning();
+                } catch (CleaningInProgressException e) {
+                    e.printStackTrace();
+                }
+            }
             throw new SeatUnavailableException();
         }
     }
 
 
 
-    public static boolean isReadyToClean() {
+    public boolean isReadyToClean() {
         return readyToClean;
     }
 
-    public static void setReadyToClean(boolean readyToClean) {
-        Restaurant.readyToClean = readyToClean;
+    public void setReadyToClean(boolean readyToClean) {
+        this.readyToClean = readyToClean;
     }
 
 
@@ -74,30 +96,29 @@ public class Restaurant {
         return MAX_CUSTOMERS;
     }
 
-    public Semaphore getLock() {
-        return lock;
-    }
-
-    public Semaphore getCleaningLock() {
-        return cleaningLock;
-    }
-
-    public int getAvailableSeats() { // Kind of redundant since can be done with getLock()
-        return this.lock.availablePermits();
-    }
-
-    public void performCleaning() {
-        //System.out.println("---PERFORMING CLEANING---");
+    public synchronized void performCleaning() throws CleaningInProgressException {
+        if (!isOpen) {
+            throw new CleaningInProgressException();
+        }
+        System.out.println("---PERFORMING CLEANING---");
+        this.isOpen = false;
+        this.readyToClean = false;
         int cleaningStart = A2P3.getTime();
         while (A2P3.getTime() - cleaningStart < Restaurant.getCleaningTime()) {
             try {
-                Thread.sleep(100);
+                Thread.sleep(150);
             } catch (Exception e) {
                 System.out.println(e);
             }
         }
-        //System.out.println("---CLEANING DONE---");
+        System.out.println("---CLEANING DONE---");
         this.isOpen = true;
+
+        try {
+            Thread.sleep(150);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     public boolean isOpen() {

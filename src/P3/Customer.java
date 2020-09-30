@@ -2,15 +2,13 @@ package P3;
 
 public class Customer implements Runnable {
 
-    private int arriveTime;     // time customer arrives at restaurant
-    private String id;             // customer id
-    private int eatTime;        // how long the customer takes to eat
-
-    private int seatedTime;     // time customer got seated
-    private int leaveTime;      // time customer left
-
-
+    private int arriveTime;         // time customer arrives at restaurant
+    private String id;              // customer id
+    private int eatTime;            // how long the customer takes to eat
+    private int seatedTime;         // time customer got seated
+    private int leaveTime;          // time customer left
     private Restaurant restaurant;
+
 
     Customer() {
         this.arriveTime = 0;
@@ -34,7 +32,7 @@ public class Customer implements Runnable {
         while (true) {
             //  Small sleep fixes some issues
             try {
-                Thread.sleep(100);
+                Thread.sleep(150);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -49,7 +47,6 @@ public class Customer implements Runnable {
             }
         }
     }
-
 
     public String getId() {
         return id;
