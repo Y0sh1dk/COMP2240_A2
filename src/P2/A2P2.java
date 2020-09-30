@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class A2P2 {
 
 //    This avoids having a separate class for time
-    private static int time;
+    private static int time = 0;
 
     public static int getTime() {
         return time;
