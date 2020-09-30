@@ -41,10 +41,10 @@ public class Customer implements Runnable {
 
             if (this.arriveTime <= A2P3.getTime()) {
                 try {
-                    restaurant.tryToSeat();
+                    restaurant.tryToSeat(this);
                     break; // ?
                 } catch (SeatUnavailableException e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
                 }
             }
         }

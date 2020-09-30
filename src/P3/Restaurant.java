@@ -38,16 +38,18 @@ public class Restaurant {
         return true;
     }
 
-    public synchronized void tryToSeat() throws SeatUnavailableException {
+    public void tryToSeat(Customer c) throws SeatUnavailableException {
         if (!this.isFull()) {
-            for (Seat s : this.seats) {
-                try {
-                    s.acquireSeat();
-                    return;
-                } catch (SeatTakenException e) {
-                    e.printStackTrace();
+            //synchronized (this) { // maybe?
+                for (Seat s : this.seats) {
+                    try {
+                        s.acquireSeat(c);
+                        break;
+                    } catch (SeatUnavailableException e) {
+                        //e.printStackTrace();
+                    }
                 }
-            }
+            //}
         } else {
             throw new SeatUnavailableException();
         }

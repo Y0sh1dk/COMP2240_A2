@@ -50,7 +50,7 @@ public class A2P3 {
 
         //THIS SLEEP IS NEEDED, DONT REMOVE!
         try {
-            Thread.sleep(1000); // DONT REMOVE
+            Thread.sleep(2000); // DONT REMOVE
         } catch (Exception e) {
             System.out.println(e);
         }

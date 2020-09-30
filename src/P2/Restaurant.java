@@ -52,8 +52,8 @@ public class Restaurant {
                 System.out.println(e);
             }
         }
-        //System.out.println("---CLEANING DONE---");
         this.isOpen = true;
+        //System.out.println("---CLEANING DONE---");
     }
 
     public boolean isOpen() {
