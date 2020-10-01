@@ -1,3 +1,15 @@
+/**
+ *  FileName: Customer.java
+ *  Assessment: COMP2240 - A2
+ *  Problem: 2
+ *  Author: Yosiah de Koeyer
+ *  Student No: c3329520
+ *
+ *  Description:
+ *  Bridge class containing all relevant methods to represent a customer entering the restaurant.
+ *  The class implements Runnable so that it can be started and ran as a thread
+ */
+
 package P2;
 
 

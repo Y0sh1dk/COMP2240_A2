@@ -1,18 +1,20 @@
+/**
+ *  FileName: Restaurant.java
+ *  Assessment: COMP2240 - A2
+ *  Problem: 3
+ *  Author: Yosiah de Koeyer
+ *  Student No: c3329520
+ *
+ *  Description:
+ *  Restaurant class containing all relevant methods to represent a restaurant with seats that customers try and aqurie.
+ *  The class implements Runnable so that it can be started and ran as a thread.
+ *
+ *  Also contains custom exception classes
+ */
+
 package P3;
 
 import java.util.ArrayList;
-
-class SeatUnavailableException extends Exception { // default visibility scope therefore only visible within package 'P3'
-    SeatUnavailableException() {
-        super();
-    }
-}
-
-class CleaningInProgressException extends Exception { // default visibility scope therefore only visible within package 'P3'
-    CleaningInProgressException() {
-        super();
-    }
-}
 
 public class Restaurant {
     private final int CLEANING_TIME = 5;
@@ -27,26 +29,6 @@ public class Restaurant {
         for (int i = 1; i <= MAX_CUSTOMERS; i++) {
             this.seats.add(new Seat(i, this));
         }
-    }
-
-    // checks if all seats are taken
-    public boolean isFull() {
-        for (Seat s : this.seats) {
-            if (!s.isTaken()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    // checks if no seats are taken
-    public boolean isEmpty() {
-        for (Seat s : this.seats) {
-            if (s.isTaken()) {
-                return false;
-            }
-        }
-        return true;
     }
 
     public synchronized void tryToSeat(Customer c) throws SeatUnavailableException {
@@ -74,6 +56,26 @@ public class Restaurant {
             }
             throw new SeatUnavailableException();
         }
+    }
+
+    // checks if all seats are taken
+    public boolean isFull() {
+        for (Seat s : this.seats) {
+            if (!s.isTaken()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // checks if no seats are taken
+    public boolean isEmpty() {
+        for (Seat s : this.seats) {
+            if (s.isTaken()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public boolean isReadyToClean() {
@@ -125,4 +127,16 @@ public class Restaurant {
         this.isOpen = open;
     }
 
+}
+
+class SeatUnavailableException extends Exception { // default visibility scope therefore only visible within package 'P3'
+    SeatUnavailableException() {
+        super();
+    }
+}
+
+class CleaningInProgressException extends Exception { // default visibility scope therefore only visible within package 'P3'
+    CleaningInProgressException() {
+        super();
+    }
 }

@@ -1,3 +1,15 @@
+/**
+ *  FileName: P2.java
+ *  Assessment: COMP2240 - A2
+ *  Problem: 2
+ *  Author: Yosiah de Koeyer
+ *  Student No: c3329520
+ *
+ *  Description:
+ *  Main class file for Problem 2, accepts a file containing the input parameters via command line argument. Initializes
+ *  customer threads and then runs the simulation, outputting relevant info to the console.
+ */
+
 package P2;
 
 import java.io.File;

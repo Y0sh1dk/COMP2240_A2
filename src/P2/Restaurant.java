@@ -1,3 +1,15 @@
+/**
+ *  FileName: Restaurant.java
+ *  Assessment: COMP2240 - A2
+ *  Problem: 2
+ *  Author: Yosiah de Koeyer
+ *  Student No: c3329520
+ *
+ *  Description:
+ *  Restaurant class containing all relevant methods to represent a restaurant that the customers will try to be seated
+ *  in. Uses semaphores to control access to the restaurant and to the cleaning process.
+ */
+
 package P2;
 
 import java.util.concurrent.Semaphore;

@@ -1,3 +1,16 @@
+/**
+ *  FileName: Farmer.java
+ *  Assessment: COMP2240 - A2
+ *  Problem: 1
+ *  Author: Yosiah de Koeyer
+ *  Student No: c3329520
+ *
+ *  Description:
+ *  Farmer class containing all relevant methods to represent a farmer crossing the bridge, the class implements
+ *  'Runnable' so that it can be started as a thread.
+ */
+
+
 package P1;
 
 
@@ -36,7 +49,7 @@ public class Farmer implements Runnable { // Implements runnable so it can be ra
 //            Try to cross bridge
             try {
                 bridge.getLock().acquire();
-                while(this.stepsTaken < Bridge.getBridgeLength()) {
+                while(this.stepsTaken < this.bridge.getBridgeLength()) {
                     this.stepsTaken += 5;
                     Thread.sleep(200);
                     System.out.println(this.farmerName + ": Crossing bridge Step " + this.stepsTaken);

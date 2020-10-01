@@ -1,7 +1,18 @@
+/**
+ *  FileName: Customer.java
+ *  Assessment: COMP2240 - A2
+ *  Problem: 3
+ *  Author: Yosiah de Koeyer
+ *  Student No: c3329520
+ *
+ *  Description:
+ *  Customer class containing all relevant methods to represent a customer entering the restaurant.
+ *  The class implements Runnable so that it can be started and ran as a thread
+ */
+
 package P3;
 
 public class Customer implements Runnable {
-
     private int arriveTime;         // time customer arrives at restaurant
     private String id;              // customer id
     private int eatTime;            // how long the customer takes to eat

@@ -1,3 +1,15 @@
+/**
+ *  FileName: P1.java
+ *  Assessment: COMP2240 - A2
+ *  Problem: 1
+ *  Author: Yosiah de Koeyer
+ *  Student No: c3329520
+ *
+ *  Description:
+ *  Main class file for Problem 1, accepts a file containing the input parameters via command line argument. Initializes
+ *  farmers and farmer threads and then runs the simulation, outputting relevant info to the console.
+ */
+
 package P1;
 
 import java.util.ArrayList;

@@ -1,3 +1,15 @@
+/**
+ *  FileName: Bridge.java
+ *  Assessment: COMP2240 - A2
+ *  Problem: 1
+ *  Author: Yosiah de Koeyer
+ *  Student No: c3329520
+ *
+ *  Description:
+ *  Bridge class containing all relevant methods to represent the bridge that the farmers will attempt to cross.
+ *  To limit the number of farmers crossing, the class contains a private Semaphore.
+ */
+
 package P1;
 
 import java.util.concurrent.*;
