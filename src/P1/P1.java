@@ -20,26 +20,29 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class P1 {
-    public static void main(String[] args) { // Example: 'N=2, S=2'
+    public static void main(String[] args) {
         if (args.length != 1) { // If no args given, exit
             System.out.println("Usage: A1 [file]");
             return;
         }
         Path filePath = Paths.get(args[0]);
         System.out.println("Using file: " + filePath);
-        if (!Files.exists(filePath)) { // exit if file not valid
+
+        if (Files.exists(filePath)) {                               // If file exists, run
+            P1 main = new P1();
+            main.run(filePath);
+        } else if (Files.exists(Paths.get((filePath + ".txt")))) {  // If it doesnt, try adding '.txt' extension
+            filePath = Paths.get((filePath + ".txt"));
+            P1 main = new P1();
+            main.run(filePath);
+        } else {                                                    // else no file can be found, exit
             System.out.println("File " + filePath.getFileName() + " is not found");
             System.out.println("Exiting...");
-            return;
         }
-        P1 main = new P1();
-        main.run(filePath);
     }
 
     private void run(Path p) {
         int[] parameters = getParametersFromFile(p);
-
-
         Bridge bridge = new Bridge();
         ArrayList<Farmer> farmerList = generateFarmers(parameters[0], parameters[1], bridge);
         ArrayList<Thread> farmerThreads = generateFarmerThreads(farmerList);

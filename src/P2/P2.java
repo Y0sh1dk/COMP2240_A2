@@ -12,6 +12,8 @@
 
 package P2;
 
+import P1.P1;
+
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -42,14 +44,18 @@ public class P2 {
         }
         Path filePath = Paths.get(args[0]);
         System.out.println("Using file: " + filePath);
-        if (!Files.exists(filePath)) { // exit if file not valid
+
+        if (Files.exists(filePath)) {                               // If file exists, run
+            P2 main = new P2();
+            main.run(filePath);
+        } else if (Files.exists(Paths.get((filePath + ".txt")))) {  // If it doesnt, try adding '.txt' extension
+            filePath = Paths.get((filePath + ".txt"));
+            P2 main = new P2();
+            main.run(filePath);
+        } else {                                                    // else no file can be found, exit
             System.out.println("File " + filePath.getFileName() + " is not found");
             System.out.println("Exiting...");
-            return;
         }
-//        If given file exits, run method "run"
-        P2 main = new P2();
-        main.run(filePath);
     }
 
     private void run(Path p) {
