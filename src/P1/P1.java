@@ -12,31 +12,36 @@
 
 package P1;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class P1 {
     public static void main(String[] args) { // Example: 'N=2, S=2'
-        if (args.length != 2) { // If wrong args amount given
-            System.out.println("Usage: P1 2 2");
+        if (args.length != 1) { // If no args given, exit
+            System.out.println("Usage: A1 [file]");
             return;
         }
-        int northFarmers;
-        int southFarmers;
-        try {
-            northFarmers = Integer.parseInt(args[0]);
-            southFarmers = Integer.parseInt(args[1]);
-        } catch (Exception e) {
-            System.out.println(e);
-            System.out.println("Usage: P1 2 2");
+        Path filePath = Paths.get(args[0]);
+        System.out.println("Using file: " + filePath);
+        if (!Files.exists(filePath)) { // exit if file not valid
+            System.out.println("File " + filePath.getFileName() + " is not found");
+            System.out.println("Exiting...");
             return;
         }
         P1 main = new P1();
-        main.run(northFarmers, southFarmers);
+        main.run(filePath);
     }
 
-    private void run(int northFarmers,int southFarmers) {
+    private void run(Path p) {
+        int[] parameters = getParametersFromFile(p);
+
+
         Bridge bridge = new Bridge();
-        ArrayList<Farmer> farmerList = generateFarmers(northFarmers, southFarmers, bridge);
+        ArrayList<Farmer> farmerList = generateFarmers(parameters[0], parameters[1], bridge);
         ArrayList<Thread> farmerThreads = generateFarmerThreads(farmerList);
         startThreads(farmerThreads);
     }
@@ -67,6 +72,26 @@ public class P1 {
         for (Thread t : threads) {
             t.start();
         }
+    }
+
+    private int[] getParametersFromFile(Path p) {
+        Scanner inputStream;
+        int[] parameters = new int[2];
+        try {
+            inputStream = new Scanner (new File(String.valueOf(p.getFileName())));
+        } catch (Exception e) {
+            System.out.println(e);
+            return null; // Already checks if file is valid previously so this should never happen
+        }
+        while (inputStream.hasNextLine()) {
+            String line = inputStream.nextLine();
+            if (line.contains("N=") && line.contains("S=")) {
+                String[] splitLine = line.split(" ", 2);
+                parameters[0] = Integer.parseInt(String.valueOf(splitLine[0].charAt(2)));
+                parameters[1] = Integer.parseInt(String.valueOf(splitLine[1].charAt(2)));
+            }
+        }
+        return parameters;
     }
 
 }
