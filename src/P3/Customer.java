@@ -49,6 +49,14 @@ public class Customer implements Runnable {
         this.restaurant = r;
     }
 
+    /**
+     * run method
+     * Overrides the abstract method in Runnable interface, is ran when the thread is started.
+     * If the customer has arrived, it tries to get a seat if seats are available and the restaurant is open. If it
+     * cannot, it waits until can. Once the customer has left the restaurant, its appropriate attributes are set.
+     *
+     * If the restaurant is full it tells the restaurant to close and do cleaning when next possible (when empty)
+     */
     @Override
     public void run() {
         boolean finished = false;

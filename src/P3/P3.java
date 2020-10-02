@@ -12,8 +12,6 @@
 
 package P3;
 
-import P1.P1;
-
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;

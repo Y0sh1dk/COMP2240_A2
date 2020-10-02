@@ -15,13 +15,14 @@ package P2;
 import java.util.concurrent.Semaphore;
 
 public class Restaurant {
-    private final int CLEANING_TIME = 5;
-    private final int MAX_CUSTOMERS = 5;
-    private boolean readyToClean = false;
-    private boolean isOpen = true;
+    private final int CLEANING_TIME = 5;    // How long cleaning takes
+    private final int MAX_CUSTOMERS = 5;    // max number of customers allowed in store
+    private boolean readyToClean = false;   // Status if restaurant is ready to clean
+    private boolean isOpen = true;          // Status if restaurant is open
+    // Semaphore to only allow up to the max customers access to this restaurant
     private Semaphore lock = new Semaphore(MAX_CUSTOMERS, true);
+    // Semaphore to only allow cleaning to happen once at a time
     private Semaphore cleaningLock = new Semaphore(1, true);
-
 
     /**
      * isReadyToClean method

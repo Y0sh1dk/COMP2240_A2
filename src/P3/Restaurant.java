@@ -58,7 +58,10 @@ public class Restaurant {
         }
     }
 
-    // checks if all seats are taken
+    /**
+     * isFull method
+     * @return boolean true if restaurant is full, false if not full
+     */
     public boolean isFull() {
         for (Seat s : this.seats) {
             if (!s.isTaken()) {
@@ -68,7 +71,10 @@ public class Restaurant {
         return true;
     }
 
-    // checks if no seats are taken
+    /**
+     * isEmpty method
+     * @return boolean true if restaurant is empty, false if not
+     */
     public boolean isEmpty() {
         for (Seat s : this.seats) {
             if (s.isTaken()) {
@@ -110,6 +116,12 @@ public class Restaurant {
         return this.MAX_CUSTOMERS;
     }
 
+    /**
+     * performCleaning method
+     * When called, closes restaurant until cleaning is done.
+     * Is synchronized so that only one cleaning can happen at a time
+     * @throws CleaningInProgressException if cleaning is currently in progress
+     */
     public synchronized void performCleaning() throws CleaningInProgressException {
         if (!isOpen) {
             throw new CleaningInProgressException();
@@ -135,22 +147,36 @@ public class Restaurant {
         }
     }
 
+    /**
+     * isOpen method
+     * @return boolean If the restaurant is open, returns true, else returns false
+     */
     public boolean isOpen() {
         return isOpen;
     }
 
+    /**
+     * setOpen method
+     * @param open A boolean to set the open status of the restaurant
+     */
     public void setOpen(boolean open) {
         this.isOpen = open;
     }
 
 }
 
+/**
+ * Custom exception that is thrown if a seat is currently unavailable
+ */
 class SeatUnavailableException extends Exception { // default visibility scope therefore only visible within package 'P3'
     SeatUnavailableException() {
         super();
     }
 }
 
+/**
+ * Custom exception that is thrown if a customer tries to be seated but cleaning is in progress
+ */
 class CleaningInProgressException extends Exception { // default visibility scope therefore only visible within package 'P3'
     CleaningInProgressException() {
         super();

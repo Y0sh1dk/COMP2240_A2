@@ -10,18 +10,16 @@
  *  'Runnable' so that it can be started as a thread.
  */
 
-
 package P1;
 
-
 public class Farmer implements Runnable { // Implements runnable so it can be ran as a separate thread
-    private int farmerID;
-    private int stepsTaken;
-    private String farmerName;
-    private String homeLocation;
-    private String destination;
-    private String currentLocation;
-    private Bridge bridge;
+    private int farmerID;           // An ID associated with the farmer
+    private int stepsTaken;         // How many steps the farmer has currently taken across the bridge
+    private String farmerName;      // Name of the farmer
+    private String homeLocation;    // Where the farmer comes from (either 'North' or 'South')
+    private String destination;     // Where the farmer is travelling too (either 'North' or 'South')
+    private String currentLocation; // Where the farmer currently is (either 'North' or 'South')
+    private Bridge bridge;          // Bridge object associated with the farmer
 
     /**
      * Farmer constructor when no args are given, initializes values
@@ -51,6 +49,12 @@ public class Farmer implements Runnable { // Implements runnable so it can be ra
         this.generateNameAndDest();
     }
 
+    /**
+     * run method
+     * Overrides the abstract method in Runnable interface, is ran when the thread is started.
+     * Tries to acquire a lock on the bridge, if it does, the farmer crosses and relevant attributes of the farmer
+     * instance. If it cannot acquire a lock, it waits until it can.
+     */
     @Override
     public void run() {
         System.out.println(this.farmerName + ": Waiting for bridge. Going towards " + this.destination);
