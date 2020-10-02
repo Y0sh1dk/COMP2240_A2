@@ -113,7 +113,7 @@ public class P1 {
         Scanner inputStream;
         int[] parameters = new int[2];
         try {
-            inputStream = new Scanner (new File(String.valueOf(p.getFileName())));
+            inputStream = new Scanner (new File(String.valueOf(p.toAbsolutePath()))); // TODO: test!
         } catch (Exception e) {
             System.out.println(e);
             return null; // Already checks if file is valid previously so this should never happen

@@ -131,7 +131,7 @@ public class P3 {
         Scanner inputStream;
         ArrayList<Customer> customers = new ArrayList<>();
         try {
-            inputStream = new Scanner (new File(String.valueOf(p.getFileName())));
+            inputStream = new Scanner (new File(String.valueOf(p.toAbsolutePath()))); // TODO: test!
         } catch (Exception e) {
             System.out.println(e);
             return null; // Already checks if file is valid previously so this should never happen
