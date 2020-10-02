@@ -20,6 +20,12 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class P1 {
+
+    /**
+     * Entry point for P1 class
+     * @param args used to pass an absolute or relative file path, works with and without '.txt' extension
+     * @return Nothing.
+     */
     public static void main(String[] args) {
         if (args.length != 1) { // If no args given, exit
             System.out.println("Usage: A1 [file]");
@@ -41,6 +47,11 @@ public class P1 {
         }
     }
 
+    /**
+     * run method that is called from main method if filepath provided is valid.
+     * Parses the input file and gets the parameters, then generates the farmers and threads then starts the threads.
+     * @param p
+     */
     private void run(Path p) {
         int[] parameters = getParametersFromFile(p);
         Bridge bridge = new Bridge();
@@ -49,6 +60,13 @@ public class P1 {
         startThreads(farmerThreads);
     }
 
+    /**
+     * A method that generated the north and south farmers from the provided arguments
+     * @param n the number of north farmers.
+     * @param s the number of south farmers.
+     * @param b the bridge object associated with the farmers
+     * @return ArrayList<Farmer> containing all farmers generated
+     */
     private ArrayList<Farmer> generateFarmers(int n, int s, Bridge b) {
         ArrayList<Farmer> farmerList = new ArrayList<>();
         //        Generate north farmers
@@ -62,6 +80,11 @@ public class P1 {
         return farmerList;
     }
 
+    /**
+     * generateFarmerThreads method that generates threads associated with farmer objects
+     * @param farmers An ArrayList containing farmer objects
+     * @return ArrayList<Thread> An ArrayList containing threads associated with farmer objects
+     */
     private ArrayList<Thread> generateFarmerThreads(ArrayList<Farmer> farmers) {
         ArrayList<Thread> threads = new ArrayList<>();
 
@@ -71,12 +94,21 @@ public class P1 {
         return threads;
     }
 
+    /**
+     * startThreads method that calls the start() method for each thread
+     * @param threads An ArrayList containing the threads to be started
+     */
     private void startThreads(ArrayList<Thread> threads) {
         for (Thread t : threads) {
             t.start();
         }
     }
 
+    /**
+     * getParametersFromFile method that parses the file provided and extracts the parameters
+     * @param p A Path object containing the path to file
+     * @return int[] of size 2 containing number of North and South farmers
+     */
     private int[] getParametersFromFile(Path p) {
         Scanner inputStream;
         int[] parameters = new int[2];

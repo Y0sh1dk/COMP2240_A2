@@ -38,6 +38,11 @@ public class P3 {
         P3.time += t;
     }
 
+    /**
+     *  Entry point for P3 class
+     * @param args used to pass an absolute or relative file path, works with and without '.txt' extension
+     * @return Nothing.
+     */
     public static void main(String[] args) {
         if (args.length != 1) { // If no args given, exit
             System.out.println("Usage: A1 [file]");

@@ -23,6 +23,9 @@ public class Farmer implements Runnable { // Implements runnable so it can be ra
     private String currentLocation;
     private Bridge bridge;
 
+    /**
+     * Farmer constructor when no args are given, initializes values
+     */
     Farmer() {
         this.farmerID = 0;
         this.stepsTaken = 0;
@@ -33,6 +36,13 @@ public class Farmer implements Runnable { // Implements runnable so it can be ra
         this.bridge = null;
     }
 
+    /**
+     * Farmer constructor when 3 args are given, initializes values, then sets
+     * correct ones.
+     * @param id        An int containing the id of the farmer
+     * @param home      A String containing the home location of the farmer
+     * @param b         A Bridge object associated with the farmer
+     */
     Farmer(int id, String home, Bridge b) {
         this();
         this.farmerID = id;
@@ -69,6 +79,10 @@ public class Farmer implements Runnable { // Implements runnable so it can be ra
         }
     }
 
+    /**
+     * generateNameAndDest method, generates the farmer name and its destination
+     * so that it doesnt need to be provided in the constructor
+     */
     private void generateNameAndDest() {
         if (this.homeLocation.equals("North")) {
             this.farmerName = "N_Farmer" + this.farmerID;
@@ -79,6 +93,10 @@ public class Farmer implements Runnable { // Implements runnable so it can be ra
         }
     }
 
+    /**
+     * changeDestination method, changes the current destination to the correct one as
+     * determined by the current location.
+     */
     private void changeDestination() {
         if (this.currentLocation.equals("North")) {
             this.destination = "South";
@@ -87,42 +105,82 @@ public class Farmer implements Runnable { // Implements runnable so it can be ra
         }
     }
 
+    /**
+     * getBridge method
+     * @return Bridge the bridge the farmer is associated with
+     */
     public Bridge getBridge() {
         return bridge;
     }
 
+    /**
+     * getFarmerID method
+     * @return int containing the ID of the farmer
+     */
     public int getFarmerID() {
         return farmerID;
     }
 
+    /**
+     * getDestination method
+     * @return String containing the current destination of the farmer
+     */
     public String getDestination() {
         return destination;
     }
 
+    /**
+     * getFarmerName method
+     * @return String containing the farmers name
+     */
     public String getFarmerName() {
         return farmerName;
     }
 
+    /**
+     * getHomeLocation method
+     * @return String containing the home location of the farmer
+     */
     public String getHomeLocation() {
         return homeLocation;
     }
 
+    /**
+     * getBridge method
+     * @param bridge object to set as the farmers bridge
+     */
     public void setBridge(Bridge bridge) {
         this.bridge = bridge;
     }
 
+    /**
+     * setDestination method
+     * @param destination A String to set as farmers destination
+     */
     public void setDestination(String destination) {
         this.destination = destination;
     }
 
+    /**
+     * setFarmerID method
+     * @param farmerID An int to set as farmers ID
+     */
     public void setFarmerID(int farmerID) {
         this.farmerID = farmerID;
     }
 
+    /**
+     * setFarmerName method
+     * @param farmerName A String to set as the farmers name
+     */
     public void setFarmerName(String farmerName) {
         this.farmerName = farmerName;
     }
 
+    /**
+     * setHomeLocation method
+     * @param homeLocation A String to set as the farmers home location.
+     */
     public void setHomeLocation(String homeLocation) {
         this.homeLocation = homeLocation;
     }
