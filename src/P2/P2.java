@@ -12,8 +12,6 @@
 
 package P2;
 
-import P1.P1;
-
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -63,6 +61,12 @@ public class P2 {
         }
     }
 
+    /**
+     * run method, gets called and passed a filepath after the file input argument has been sanitized. Instantiates a
+     * restaurant, reads customers from file, creates and starts threads, then runs the simulation. Once all customers
+     * have passed through the restaurant, a summary is printed
+     * @param p
+     */
     private void run(Path p) {
         Restaurant restaurant = new Restaurant();
         ArrayList<Customer> customers = readCustomersFromFile(p, restaurant);
@@ -92,6 +96,10 @@ public class P2 {
         this.printSummary(customers);
     }
 
+    /**
+     * printSummary method, prints a summary of the simulation using values stored in the customer objects
+     * @param customers An ArrayList of the customers
+     */
     private void printSummary(ArrayList<Customer> customers) {
         System.out.println("\nSummary");
         System.out.println(String.format("%-9s %-9s %-9s %-9s", "Customer", "Arrives", "Seats", "Leaves"));
@@ -101,7 +109,11 @@ public class P2 {
         }
     }
 
-
+    /**
+     * lastJobFinished, checks if all jobs have finished or not
+     * @param customers An ArrayList containing the customers
+     * @return boolean true if all jobs have finished, false if they have not
+     */
     private boolean lastJobFinished(ArrayList<Customer> customers) {
         for (Customer c : customers) {
             if (c.getLeaveTime() == 0) { // presumes customer stays in shop for atleast 1 unit of time
@@ -111,12 +123,21 @@ public class P2 {
         return true; // all jobs finished
     }
 
+    /**
+     * startThreads method that calls the start() method for each thread
+     * @param threads An ArrayList containing the threads to be started
+     */
     private void startThreads(ArrayList<Thread> threads) {
         for (Thread t : threads) {
             t.start();
         }
     }
 
+    /**
+     * generateFarmerThreads method that generates threads associated with the customer objects
+     * @param customers An ArrayList containing the customers
+     * @return ArrayList<Thread> An ArrayList containing the threads
+     */
     private ArrayList<Thread> generateCustomerThreads(ArrayList<Customer> customers) {
         ArrayList<Thread> threads = new ArrayList<>();
 
@@ -126,6 +147,13 @@ public class P2 {
         return threads;
     }
 
+    /**
+     * readCustomersFromFile method, parses the given file to extract the customer information
+     * from it and return customer objects
+     * @param p A Path object containing the path to the file
+     * @param r The restaurant associated with the customers
+     * @return ArrayList<Customer> An ArrayList containing the customers from the file
+     */
     private ArrayList<Customer> readCustomersFromFile(Path p, Restaurant r) {
         Scanner inputStream;
         ArrayList<Customer> customers = new ArrayList<>();
@@ -145,5 +173,4 @@ public class P2 {
         }
         return customers;
     }
-
 }

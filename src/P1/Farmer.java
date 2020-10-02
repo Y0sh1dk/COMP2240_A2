@@ -37,8 +37,7 @@ public class Farmer implements Runnable { // Implements runnable so it can be ra
     }
 
     /**
-     * Farmer constructor when 3 args are given, initializes values, then sets
-     * correct ones.
+     * Farmer constructor when 3 args are given, initializes values, then sets correct ones.
      * @param id        An int containing the id of the farmer
      * @param home      A String containing the home location of the farmer
      * @param b         A Bridge object associated with the farmer

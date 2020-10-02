@@ -23,34 +23,65 @@ public class Restaurant {
     private Semaphore cleaningLock = new Semaphore(1, true);
 
 
+    /**
+     * isReadyToClean method
+     * @return boolean if restaurant is ready to clean, returns true, else false.
+     */
     public boolean isReadyToClean() {
         return this.readyToClean;
     }
 
+    /**
+     * setReadyToClean method
+     * @param readyToClean A boolean to set ready to clean status of the restaurant
+     */
     public void setReadyToClean(boolean readyToClean) {
         this.readyToClean = readyToClean;
     }
 
+    /**
+     * getCleaningTime method
+     * @return a int containing the time cleaning takes at this restaurant
+     */
     public int getCleaningTime() {
         return this.CLEANING_TIME;
     }
 
+    /**
+     * getMaxCustomers method
+     * @return int containing the max customers this restaurant can take
+     */
     public int getMaxCustomers() {
         return this.MAX_CUSTOMERS;
     }
 
+    /**
+     * getLock method
+     * @return Semaphore used to control how many customers can be seated at the restaurant
+     */
     public Semaphore getLock() {
         return lock;
     }
 
+    /**
+     * getCleaningLock method
+     * @return Semaphore used to make sure cleaning can only happen once at a time
+     */
     public Semaphore getCleaningLock() {
         return cleaningLock;
     }
 
+    /**
+     * getAvailableSeats method
+     * @return int containing the number of free seats at the restaurant
+     */
     public int getAvailableSeats() { // Kind of redundant since can be done with getLock()
         return this.lock.availablePermits();
     }
 
+    /**
+     * performCleaning method, stops any customers entering the restaurant whilst cleaning is in progress
+     */
     public void performCleaning() {
         //System.out.println("---PERFORMING CLEANING---");
         int cleaningStart = P2.getTime();
@@ -65,11 +96,19 @@ public class Restaurant {
         //System.out.println("---CLEANING DONE---");
     }
 
+    /**
+     * isOpen method
+     * @return boolean If the restaurant is open, returns true, else returns false
+     */
     public boolean isOpen() {
         return isOpen;
     }
 
+    /**
+     * setOpen method
+     * @param open A boolean to set the open status of the restaurant
+     */
     public void setOpen(boolean open) {
-        isOpen = open;
+        this.isOpen = open;
     }
 }

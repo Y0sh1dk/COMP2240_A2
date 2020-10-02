@@ -78,20 +78,36 @@ public class Restaurant {
         return true;
     }
 
+    /**
+     * isReadyToClean method
+     * @return boolean if restaurant is ready to clean, returns true, else false.
+     */
     public boolean isReadyToClean() {
-        return readyToClean;
+        return this.readyToClean;
     }
 
+    /**
+     * setReadyToClean method
+     * @param readyToClean A boolean to set ready to clean status of the restaurant
+     */
     public void setReadyToClean(boolean readyToClean) {
         this.readyToClean = readyToClean;
     }
 
+    /**
+     * getCleaningTime method
+     * @return a int containing the time cleaning takes at this restaurant
+     */
     public int getCleaningTime() {
-        return CLEANING_TIME;
+        return this.CLEANING_TIME;
     }
 
+    /**
+     * getMaxCustomers method
+     * @return int containing the max customers this restaurant can take
+     */
     public int getMaxCustomers() {
-        return MAX_CUSTOMERS;
+        return this.MAX_CUSTOMERS;
     }
 
     public synchronized void performCleaning() throws CleaningInProgressException {

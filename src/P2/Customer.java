@@ -22,6 +22,9 @@ public class Customer implements Runnable {
     private Restaurant restaurant;
 
 
+    /**
+     * Customer constructor when no args are given, initializes values
+     */
     Customer() {
         this.arriveTime = 0;
         this.id = null;
@@ -30,6 +33,13 @@ public class Customer implements Runnable {
         this.leaveTime = 0;
     }
 
+    /**
+     * Customer constructor when args are given, initializes values then sets correct ones.
+     * @param aTime     An int containing the arrival time of the customer
+     * @param id        A String containing the ID of the customer
+     * @param eTime     An int containing how long the customer spends in the restaurant
+     * @param r         A Restaurant object associated with the customer
+     */
     Customer(int aTime, String id, int eTime, Restaurant r) {
         this();
         this.arriveTime = aTime;
@@ -48,7 +58,6 @@ public class Customer implements Runnable {
             } catch (InterruptedException e) {
                 //e.printStackTrace();
             }
-
             if (this.arriveTime <= P2.getTime() ) {
                 if (this.restaurant.getAvailableSeats() > 0 && this.restaurant.isOpen()) { // If there are available seats
                     try {
@@ -92,50 +101,99 @@ public class Customer implements Runnable {
         }
     }
 
+    /**
+     * getId method
+     * @return String containing the Id of the customer
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * getArriveTime method
+     * @return int containing the arrival time of the customer
+     */
     public int getArriveTime() {
         return arriveTime;
     }
 
+    /**
+     * getEatTime method
+     * @return int containing how long the customer stays in the restaurant
+     */
     public int getEatTime() {
         return eatTime;
     }
 
+    /**
+     * getLeaveTime method
+     * @return int containing the time the customer left the restaurant
+     */
     public int getLeaveTime() {
         return leaveTime;
     }
 
+    /**
+     * getSeatedTime method
+     * @return int containing the time the customer was seated in the restaurant
+     */
     public int getSeatedTime() {
         return seatedTime;
     }
 
+    /**
+     * getRestaurant method
+     * @return Restaurant the restaurant the customer is associated with
+     */
     public Restaurant getRestaurant() {
         return restaurant;
     }
 
+    /**
+     * setId method/
+     * @param id String containing the id to assign the the customer
+     */
     public void setId(String id) {
         this.id = id;
     }
 
+    /**
+     * setArriveTime method
+     * @param arriveTime int containing the arrival time to assign to the customer
+     */
     public void setArriveTime(int arriveTime) {
         this.arriveTime = arriveTime;
     }
 
+    /**
+     * setEatTime method
+     * @param eatTime int containing the eat time (how long the customer spends in the restaurant) to assign to the
+     *                customer
+     */
     public void setEatTime(int eatTime) {
         this.eatTime = eatTime;
     }
 
+    /**
+     * setLeaveTime method
+     * @param leaveTime int containing the time that the customer leaves to assign to the customer
+     */
     public void setLeaveTime(int leaveTime) {
         this.leaveTime = leaveTime;
     }
 
+    /**
+     * setRestaurant method
+     * @param restaurant A Restaurant object to assign to the customer
+     */
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
     }
 
+    /**
+     * setSeatedTime
+     * @param seatedTime int containing the time the customer was seated to assign to the customer
+     */
     public void setSeatedTime(int seatedTime) {
         this.seatedTime = seatedTime;
     }
