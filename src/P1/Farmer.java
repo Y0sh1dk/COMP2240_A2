@@ -62,10 +62,11 @@ public class Farmer implements Runnable { // Implements runnable so it can be ra
 //            Try to cross bridge
             try {
                 bridge.getLock().acquire();
+                this.stepsTaken += 5;
                 while(this.stepsTaken < this.bridge.getBridgeLength()) {
-                    this.stepsTaken += 5;
                     Thread.sleep(200);
                     System.out.println(this.farmerName + ": Crossing bridge Step " + this.stepsTaken);
+                    this.stepsTaken += 5;
                 }
                 System.out.println(this.farmerName + ": Across the bridge");
                 this.bridge.getLock().release();
