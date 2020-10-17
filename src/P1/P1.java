@@ -55,9 +55,9 @@ public class P1 {
     private void run(Path p) {
         int[] parameters = getParametersFromFile(p);
         Bridge bridge = new Bridge();
-        ArrayList<Farmer> farmerList = generateFarmers(parameters[0], parameters[1], bridge);
-        ArrayList<Thread> farmerThreads = generateFarmerThreads(farmerList);
-        startThreads(farmerThreads);
+        ArrayList<Farmer> farmerList = generateFarmers(parameters[0], parameters[1], bridge);   // Generate farmers
+        ArrayList<Thread> farmerThreads = generateFarmerThreads(farmerList);                    // Make farmer threads
+        startThreads(farmerThreads);                                                            // Start the threads
     }
 
     /**

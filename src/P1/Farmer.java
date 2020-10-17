@@ -75,6 +75,7 @@ public class Farmer implements Runnable { // Implements runnable so it can be ra
                 this.changeDestination();
                 this.bridge.incrementCount();
                 System.out.println("NEON = " + this.bridge.getCount());
+                Thread.sleep(200);
 
             } catch (InterruptedException e) {
                 e.printStackTrace();
