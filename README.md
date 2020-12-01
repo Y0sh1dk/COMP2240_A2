@@ -2,13 +2,14 @@
 Notes:
 
 File extensions are not necessary when running from terminal. However, it is assumed that each file is formatted
-correctly and contained valid data.
+correctly and containes valid data.
 
 ## Problem 1: Sharing the bridge
 Notes:
 
  - Main loop does not have an exit condition, will run until interrupted
  - Counter for NEON sign is stored as int like `private int count` so may overflow - NOT TESTED
+ - 200ms delay between every 5 steps the farmers take
 
 Compile:
 
